@@ -1,5 +1,3 @@
-import '2-password.dart';
-
 class Password {
 
   // Private property
