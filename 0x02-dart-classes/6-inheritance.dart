@@ -7,7 +7,7 @@ class User extends Password {
   String name;
   int age;
   double height;
-  String user_password;
+  String user_password = '';
 
   // Constructor that initializes class properties.
   User(
@@ -24,7 +24,7 @@ class User extends Password {
       name: userJson['name'],
       age: userJson['age'],
       height: userJson['height'],
-      user_password: userJson['user_password']);
+      user_password: '');
 
   // Method that return a map representation of the User
   Map toJson() => {
@@ -35,6 +35,9 @@ class User extends Password {
       };
 
   // Override existing method
-  String toString() =>
-      'User(id : ${this.id} ,name: ${this.name}, age: ${this.age}, height: ${this.height}, Password: ${isValid(user_password)})';
+  String toString() {
+    final pwd = Password(password: this.user_password);
+
+    return 'User(id : $id ,name: $name, age: $age, height: $height, Password: ${pwd.isValid()})';
+  }
 }
