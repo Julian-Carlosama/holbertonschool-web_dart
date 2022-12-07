@@ -3,19 +3,23 @@ import 'dart:convert';
 
 Future<String> greetUser() {
     try {
-        return fectchUserData().then((data) {
-            var userName = json.decode(data)['username'];
-            return 'Hello $userName';
-        });
+        final data = jsonDecode(await fetchUserData());
+        return 'Hello ${data?['username']}';
     } catch (err) {
         return Future.error('error caught: $err');
     }
 }
 
 Future<String> loginUser() async {
-    if (await checkCredentials()) {
-        return greetUser();
-    } else {
-        return Future.error('Wrong credentials');
+    try {
+    final isVallid = await checkCredentials();
+    if (isVallid) {
+      print('There is a user: true');
+      return await greetUser();
     }
+    print('There is a user: false');
+    return 'Wrong credentials';
+    } catch (err) {
+    return 'error caught: $err';
+  }
 }
